@@ -1,0 +1,24 @@
+﻿@using DealerOrders.ViewModels
+@model BaseViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@RenderSection("TitleSection")</title>
+    @RenderSection("HeaderSection",false)
+</head>
+<body>
+    <div style="text-align:right">
+        For Dealership @Model.DealerName<br />
+        Hello, @Model.UserName<br />
+        <a href="/Authentication/Logout">Logout</a>
+    </div>
+    <hr/>
+    <div>
+        @RenderSection("ContentBody")
+    </div>
+    @Html.Partial("Footer",Model.FooterData)
+</body>
+</html>

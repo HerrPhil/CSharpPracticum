@@ -1,0 +1,119 @@
+﻿@using DealerOrders.ViewModels
+
+@model CreateOrderViewModel
+
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+@section TitleSection{
+    CreateOrder
+}
+
+@section HeaderSection{
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/ModelOptions.js"></script>
+<script src="~/Scripts/Validations.js"></script>
+<script>
+    function ResetForm()
+    {
+        document.getElementById('TxtVehicle').value = "";
+        document.getElementById('TxtOptions').value = "";
+        document.getElementById('TxtCustomer').value = "";
+        document.getElementById('TxtRequested').value = "";
+        document.getElementById('TxtBuilt').value = "";
+        $('#ModelId').val("");
+        $("#OptionId").empty();
+        $("#OptionId").append('<option value="' + "0" + '">' + "-- Select Option(s) --" + '</option>')
+    }
+</script>
+   
+}
+
+@section ContentBody{
+    <div>
+        @using (Html.BeginForm("Save", "Order", FormMethod.Post, new { id = "ModelOptionFormID", data_optionListAction = Url.Action("GetOptions") }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        Make:
+                    </td>
+                    <td>
+                        @Html.HiddenFor(y => y.Vehicle, new { id = "TxtVehicle" })
+                        @Html.DropDownListFor(d => d.ModelId, Model.ModelList, "-- Select Model --")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        @Html.ValidationMessage("Vehicle")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Option:
+                    </td>
+                    <td>
+                        @Html.HiddenFor(z => z.Options, new { id = "TxtOptions" })
+                        @Html.DropDownList("OptionId", new MultiSelectList(Enumerable.Empty<Object>(), "OptionId", "OptionName"), "-- Select Option(s) --", new { multiple = "multiple"})
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Customer:
+                    </td>
+                    <td>
+                        <input type="text" id="TxtCustomer" name="Customer" value="@Model.Customer" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        @Html.ValidationMessage("Customer")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Requested:
+                    </td>
+                    <td>
+                        <input type="text" id="TxtRequested" name="Requested" value="@Model.Requested" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        @Html.ValidationMessage("Requested")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Built:
+                    </td>
+                    <td>
+                        <input type="text" id="TxtBuilt" name="Built" value="@Model.Built" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        @Html.ValidationMessage("Built")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.AntiForgeryToken()<input type="submit" name="BtnSubmit" value="Save Order" onclick="return IsValid()" />
+                        <input type="button" name="BtnReset" value="Reset" onclick="ResetForm()" />
+                        <input type="submit" name="BtnSubmit" value="Cancel" />
+                    </td>
+                </tr>
+            </table>
+        }
+
+        @*<form action="/Order/Save" method="post" id="createOrder" name="createOrder">
+        </form>*@
+
+    </div>
+}

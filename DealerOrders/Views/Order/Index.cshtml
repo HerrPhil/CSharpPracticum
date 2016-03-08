@@ -1,0 +1,35 @@
+﻿@using DealerOrders.ViewModels
+@model OrderListViewModel
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+@* header section is optional - not added *@
+@section TitleSection{
+    OrderView
+}
+
+@section ContentBody{
+    <div>
+        @{
+            Html.RenderAction("GetAddNewLink");
+        }
+        <table border="1">
+            <tr>
+                <th>Vehicle</th>
+                <th>Options</th>
+                <th>Customer</th>
+                <th>Important Dates</th>
+            </tr>
+            @foreach (OrderViewModel item in Model.Orders)
+            {
+                <tr>
+                    <td style="background-color:@item.VehicleColor">@item.Vehicle</td>
+                    <td>@item.VehicleOptions</td>
+                    <td>@item.Customer</td>
+                    <td>@item.ImportantDates</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
